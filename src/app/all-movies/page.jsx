@@ -23,7 +23,7 @@ const AllMovies = () => {
     console.log(pageToFetch)
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/api/movies?page=${pageToFetch}`, {
+      const response = await fetch(`/api/movies?page=${pageToFetch}`, {
         method: "GET",
         cache:"force-cache"
       });

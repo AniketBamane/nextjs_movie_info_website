@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const getAMovie = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/movies/${id}`, {
+    const response = await fetch(`/api/movies/${id}`, {
       method: "GET",
       cache: "no-cache"
     });

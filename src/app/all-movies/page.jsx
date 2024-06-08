@@ -7,15 +7,7 @@ const AllMovies = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(() => {
-    if (typeof window !== 'undefined') {
-      // Get the stored page number from localStorage, default to 1
-      return parseInt(localStorage.getItem('page')) || 1;
-    } else {
-      // If localStorage is not available (e.g., during server-side rendering), return a default value
-      return 1;
-    }
-  });
+  const [page, setPage] = useState(1);
   const observer = useRef();
   const lastMovieElementRef = useRef();
 
@@ -50,7 +42,6 @@ const AllMovies = () => {
       if (entries[0].isIntersecting) {
         setPage(prevPage => {
           const newPage = prevPage + 1;
-          localStorage.setItem('page', newPage); // Store the new page number in localStorage
           return newPage;
         });
       }

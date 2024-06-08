@@ -22,7 +22,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="container mx-auto my-32 p-4">
+    <div className="container mx-auto p-4">
       {/* Hero Section */}
       <section className="relative h-96 flex items-center justify-center">
         <div className="absolute inset-0 bg-center bg-cover " style={{ backgroundImage: "url('/hero.avif')", opacity: 0.8 }}></div>

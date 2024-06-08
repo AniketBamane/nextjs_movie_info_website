@@ -34,7 +34,7 @@ export default function Contact() {
     }
   }
   return (
-    <div className="h-screen bg-gray-100 flex justify-center">
+    <div className="h-screen bg-gray-100 flex justify-center p-4">
       <div className="w-[80%] mx-auto ">
         <div className="flex flex-col md:flex-row items-center gap-10 justify-between">
           <div className="w-full md:w-1/2 mb-10 md:mb-0">

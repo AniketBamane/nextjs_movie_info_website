@@ -39,6 +39,22 @@ export default function Navbar({ className }) {
                     Contact Us
                   </a>
                 </Link>
+                
+                {/* Sign-in or Sign-out button */}
+                <button
+                  onClick={() => {
+                    if (session.status === "unauthenticated") {
+                      signIn("google");
+                      console.log("sign in ");
+                    } else {
+                      console.log("sign out !");
+                      signOut();
+                    }
+                  }}
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  {session.status === "unauthenticated" ? "Sign In" : "Sign Out"}
+                </button>
               </div>
             </div>
           </div>
@@ -72,22 +88,6 @@ export default function Navbar({ className }) {
               Contact Us
             </a>
           </Link>
-          <div>
-            <button
-              onClick={() => {
-                if (session.status === "unauthenticated") {
-                  signIn("google");
-                  console.log("sign in ");
-                } else {
-                  console.log("sign out !");
-                  signOut();
-                }
-              }}
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left"
-            >
-              {session.status === "unauthenticated" ? "Sign In" : "Sign Out"}
-            </button>
-          </div>
         </div>
       </div>
     </nav>

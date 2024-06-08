@@ -50,7 +50,7 @@ const AllMovies = () => {
   }, [loading]);
 
   return (
-    <div className="mx-5 my-32 grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+    <div className="mx-5  grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {error && <h1>{error}</h1>}
       {movies.length === 0 && !loading && <h1>No movies found!</h1>}
       {movies.map((movie, index) => {

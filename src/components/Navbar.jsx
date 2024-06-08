@@ -1,5 +1,4 @@
-"use client"
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { MenuIcon } from "@heroicons/react/outline"; // Assuming you have the MenuIcon component from Heroicons
@@ -7,10 +6,24 @@ import { MenuIcon } from "@heroicons/react/outline"; // Assuming you have the Me
 export default function Navbar({ className }) {
   const session = useSession();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawerRef = useRef(null);
 
   const toggleDrawer = () => {
     setDrawerOpen((prev) => !prev);
   };
+
+  const handleClickOutside = (event) => {
+    if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+      setDrawerOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className={"bg-gray-800"}>
@@ -69,9 +82,12 @@ export default function Navbar({ className }) {
       </div>
 
       {/* Mobile Drawer */}
-      <div className={`${drawerOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="fixed inset-0 z-20 bg-gray-600 bg-opacity-75"></div>
-        <div className="fixed inset-y-0 right-0 z-30 w-64 bg-gray-800">
+      <div
+        ref={drawerRef}
+        className={`${drawerOpen ? "block" : "hidden"} md:hidden fixed inset-0 z-20`}
+      >
+        <div className="bg-gray-600 bg-opacity-75" onClick={toggleDrawer}></div>
+        <div className="bg-gray-800 fixed inset-y-0 right-0 z-30 w-64">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link href="/">
               <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">

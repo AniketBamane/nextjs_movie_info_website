@@ -8,7 +8,7 @@ export async function GET(request,{params}){
     const database = mongoose.connection.db
     const movieModel = database.collection("movies")
     console.log(params.id)
-    const data = await movieModel.findOne({_id: new mongoose.Types.ObjectId(params.id)})
+    const data = await movieModel.findOne({_id: params.id})
     return NextResponse.json({movie:data})
   } catch (error) {
     return NextResponse.json({

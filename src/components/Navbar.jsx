@@ -22,24 +22,36 @@ export default function Navbar({ className }) {
                 <a className="text-white font-bold">Your Logo</a>
               </Link>
             </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/">
-                  <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    Home
-                  </a>
-                </Link>
-                <Link href="/all-movies">
-                  <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    All Movies
-                  </a>
-                </Link>
-                <Link href="/contact-us">
-                  <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    Contact Us
-                  </a>
-                </Link>
-              </div>
+            <div className="ml-10 flex items-baseline space-x-4">
+              <Link href="/">
+                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  Home
+                </a>
+              </Link>
+              <Link href="/all-movies">
+                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  All Movies
+                </a>
+              </Link>
+              <Link href="/contact-us">
+                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  Contact Us
+                </a>
+              </Link>
+              <button
+                onClick={() => {
+                  if (session.status === "unauthenticated") {
+                    signIn("google");
+                    console.log("sign in ");
+                  } else {
+                    console.log("sign out !");
+                    signOut();
+                  }
+                }}
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {session.status === "unauthenticated" ? "Sign In" : "Sign Out"}
+              </button>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -72,8 +84,6 @@ export default function Navbar({ className }) {
               Contact Us
             </a>
           </Link>
-          
-          {/* Sign-in or Sign-out button */}
           <button
             onClick={() => {
               if (session.status === "unauthenticated") {

@@ -14,35 +14,30 @@ export default function Navbar({ className }) {
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
       <Menu setActive={setActive}>
-      <Link href={"/"}>
-        <MenuItem setActive={setActive} active={active} item="Home">
-        </MenuItem>
+        <Link href={"/"}>
+          <MenuItem setActive={setActive} active={active} item="Home">
+          </MenuItem>
         </Link>
         <Link href={"/all-movies"}>
-        <MenuItem setActive={setActive} active={active} item="All Movies">
-        </MenuItem>
+          <MenuItem setActive={setActive} active={active} item="All Movies">
+          </MenuItem>
         </Link>
         <Link href={"/contact-us"}>
-        <MenuItem setActive={setActive} active={active} item="contact-us">
-        </MenuItem>
+          <MenuItem setActive={setActive} active={active} item="contact-us">
+          </MenuItem>
         </Link>
-        {session.status === "unauthenticated" ?
         <div onClick={()=>{
-          signIn("google")
-          console.log("sign in ")
-        }
-        }>
-          <MenuItem  setActive={setActive} active={active} item="Sign In">
-        </MenuItem>
+          if(session.status === "unauthenticated") {
+            signIn("google");
+            console.log("sign in ");
+          } else {
+            console.log("sign out !");
+            signOut();
+          }
+        }}>
+          <MenuItem setActive={setActive} active={active} item={session.status === "unauthenticated" ? "Sign In" : "Sign Out"}>
+          </MenuItem>
         </div>
-        :
-        <div onClick={()=>{
-          console.log("sign out !")
-          signOut()}}>
-        <MenuItem setActive={setActive} active={active} item="Sign Out">
-        </MenuItem>
-        </div>
-        }
       </Menu>
     </div>
   );

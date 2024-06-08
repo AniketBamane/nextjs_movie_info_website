@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.3",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
     "mongoose": "^8.4.1",

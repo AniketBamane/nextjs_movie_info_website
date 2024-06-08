@@ -8,8 +8,13 @@ const AllMovies = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(() => {
-    // Get the stored page number from localStorage, default to 1
-    return parseInt(localStorage.getItem('page')) || 1;
+    if (typeof window !== 'undefined') {
+      // Get the stored page number from localStorage, default to 1
+      return parseInt(localStorage.getItem('page')) || 1;
+    } else {
+      // If localStorage is not available (e.g., during server-side rendering), return a default value
+      return 1;
+    }
   });
   const observer = useRef();
   const lastMovieElementRef = useRef();

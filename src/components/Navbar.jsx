@@ -2,29 +2,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { MenuIcon } from "@heroicons/react/outline"; // Assuming you have the MenuIcon component from Heroicons
+import { MenuIcon, XIcon } from "@heroicons/react/outline"; // Assuming you have the XIcon component from Heroicons
 
 export default function Navbar({ className }) {
-  const session = useSession();
+  const { data: session, status } = useSession();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawerRef = useRef(null);
 
   const toggleDrawer = () => {
     setDrawerOpen((prev) => !prev);
   };
-
-  const handleClickOutside = (event) => {
-    if (drawerRef.current && !drawerRef.current.contains(event.target)) {
-      setDrawerOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <nav className={"bg-gray-800"}>
@@ -55,7 +41,7 @@ export default function Navbar({ className }) {
                 </Link>
                 <button
                   onClick={() => {
-                    if (session.status === "unauthenticated") {
+                    if (status === "unauthenticated") {
                       signIn("google");
                       console.log("sign in ");
                     } else {
@@ -65,7 +51,7 @@ export default function Navbar({ className }) {
                   }}
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  {session.status === "unauthenticated" ? "Sign In" : "Sign Out"}
+                  {status === "unauthenticated" ? "Sign In" : "Sign Out"}
                 </button>
               </div>
             </div>
@@ -84,40 +70,50 @@ export default function Navbar({ className }) {
 
       {/* Mobile Drawer */}
       <div
-        ref={drawerRef}
         className={`${drawerOpen ? "block" : "hidden"} md:hidden fixed inset-0 z-20`}
       >
-        <div className="bg-gray-600 bg-opacity-75" onClick={toggleDrawer}></div>
+        <div className="bg-gray-600 bg-opacity-75"></div>
         <div className="bg-gray-800 fixed inset-y-0 right-0 z-30 w-64">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-white text-lg">Menu</h2>
+              <button
+                onClick={toggleDrawer}
+                className="text-gray-400 hover:text-white"
+              >
+                <span className="sr-only">Close menu</span>
+                <XIcon className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
             <Link href="/">
-              <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+              <a onClick={toggleDrawer} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                 Home
               </a>
             </Link>
             <Link href="/all-movies">
-              <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+              <a onClick={toggleDrawer} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                 All Movies
               </a>
             </Link>
             <Link href="/contact-us">
-              <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+              <a onClick={toggleDrawer} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                 Contact Us
               </a>
             </Link>
             <button
               onClick={() => {
-                if (session.status === "unauthenticated") {
+                if (status === "unauthenticated") {
                   signIn("google");
                   console.log("sign in ");
                 } else {
                   console.log("sign out !");
                   signOut();
                 }
+                toggleDrawer();
               }}
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
             >
-              {session.status === "unauthenticated" ? "Sign In" : "Sign Out"}
+              {status === "unauthenticated" ? "Sign In" : "Sign Out"}
             </button>
           </div>
         </div>
